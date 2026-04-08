@@ -9,6 +9,7 @@ import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSettingsStore } from '../src/store/settingsStore';
 import { useTransactionStore } from '../src/store/transactionStore';
 import { DarkColors, LightColors } from '../src/constants/Colors';
@@ -33,6 +34,7 @@ export default function RootLayout() {
           'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
           'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
           'SpaceMono-Regular': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          ...MaterialCommunityIcons.font,
         });
 
         // Load persisted data

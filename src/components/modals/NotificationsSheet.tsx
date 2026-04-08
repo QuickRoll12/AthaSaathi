@@ -11,6 +11,8 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, {
@@ -85,30 +87,45 @@ export default function NotificationsSheet({
     >
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Animated.View
-        entering={FadeIn.duration(200)}
-        exiting={FadeOut.duration(200)}
-        style={[styles.overlay, { backgroundColor: theme.overlay }]}
-      >
-        <Pressable style={styles.overlayPress} onPress={onClose} />
-      </Animated.View>
+          entering={FadeIn.duration(200)}
+          exiting={FadeOut.duration(200)}
+          style={[styles.overlay, { backgroundColor: theme.overlay }]}
+        >
+          <Pressable style={styles.overlayPress} onPress={onClose} />
+        </Animated.View>
 
-      <Animated.View
-        entering={SlideInDown.duration(350)}
-        exiting={SlideOutDown.duration(250)}
-        style={[styles.sheet, { backgroundColor: theme.background }]}
-      >
-        <View style={styles.handleContainer}>
-          <View style={[styles.handle, { backgroundColor: theme.border }]} />
-        </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.keyboardAvoidingView}
+          pointerEvents="box-none"
+        >
+          <Animated.View
+            entering={SlideInDown.duration(350)}
+            exiting={SlideOutDown.duration(250)}
+            style={[styles.sheet, { backgroundColor: theme.background }]}
+          >
+            <View style={styles.handleContainer}>
+              <View style={[styles.handle, { backgroundColor: theme.border }]} />
+            </View>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
           bounces={false}
           contentContainerStyle={styles.content}
         >
-          <Text style={[Typography.headingLarge, { color: theme.text, marginBottom: Spacing.xl }]}>
-            Notifications
-          </Text>
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={[Typography.headingLarge, { color: theme.text }]}>
+              Notifications
+            </Text>
+            <Pressable
+              onPress={onClose}
+              hitSlop={16}
+              style={styles.closeButton}
+            >
+              <MaterialCommunityIcons name="close-circle" size={28} color={theme.textMuted} />
+            </Pressable>
+          </View>
 
           {alerts.length === 0 ? (
             <View style={styles.emptyContainer}>
@@ -136,6 +153,7 @@ export default function NotificationsSheet({
           )}
         </ScrollView>
       </Animated.View>
+      </KeyboardAvoidingView>
       </GestureHandlerRootView>
     </Modal>
   );
@@ -148,11 +166,12 @@ const styles = StyleSheet.create({
   overlayPress: {
     flex: 1,
   },
+  keyboardAvoidingView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   sheet: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    width: '100%',
     maxHeight: '70%',
     borderTopLeftRadius: Radius.xxl,
     borderTopRightRadius: Radius.xxl,
@@ -170,6 +189,15 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: Spacing.lg,
     paddingBottom: Spacing.huge,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: Spacing.xl,
+  },
+  closeButton: {
+    padding: Spacing.xs,
   },
   alertCard: {
     flexDirection: 'row',

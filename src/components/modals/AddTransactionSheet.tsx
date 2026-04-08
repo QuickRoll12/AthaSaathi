@@ -117,26 +117,27 @@ export default function AddTransactionSheet({
     >
       <GestureHandlerRootView style={{ flex: 1 }}>
         <Animated.View
-        entering={FadeIn.duration(200)}
-        exiting={FadeOut.duration(200)}
-        style={[styles.overlay, { backgroundColor: theme.overlay }]}
-      >
-        <Pressable style={styles.overlayPress} onPress={handleClose} />
-      </Animated.View>
-
-      <Animated.View
-        entering={SlideInDown.duration(350)}
-        exiting={SlideOutDown.duration(250)}
-        style={[styles.sheet, { backgroundColor: theme.background }]}
-      >
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{ flex: 1 }}
+          entering={FadeIn.duration(200)}
+          exiting={FadeOut.duration(200)}
+          style={[styles.overlay, { backgroundColor: theme.overlay }]}
         >
-          {/* Handle bar */}
-          <View style={styles.handleContainer}>
-            <View style={[styles.handle, { backgroundColor: theme.border }]} />
-          </View>
+          <Pressable style={styles.overlayPress} onPress={handleClose} />
+        </Animated.View>
+
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={styles.keyboardAvoidingView}
+          pointerEvents="box-none"
+        >
+          <Animated.View
+            entering={SlideInDown.duration(350)}
+            exiting={SlideOutDown.duration(250)}
+            style={[styles.sheet, { backgroundColor: theme.background }]}
+          >
+            {/* Handle bar */}
+            <View style={styles.handleContainer}>
+              <View style={[styles.handle, { backgroundColor: theme.border }]} />
+            </View>
 
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -144,10 +145,23 @@ export default function AddTransactionSheet({
             contentContainerStyle={styles.content}
             keyboardShouldPersistTaps="handled"
           >
-            {/* Title */}
-            <Text style={[Typography.headingLarge, { color: theme.text }]}>
-              Add Transaction
-            </Text>
+            {/* Header */}
+            <View style={styles.header}>
+              <Text style={[Typography.headingLarge, { color: theme.text }]}>
+                Add Transaction
+              </Text>
+              <Pressable
+                onPress={() => {
+                  Haptics.selectionAsync();
+                  handleClose();
+                }}
+                hitSlop={16}
+                style={styles.closeButton}
+                android_ripple={{ color: theme.surface, borderless: true }}
+              >
+                <MaterialCommunityIcons name="close-circle" size={28} color={theme.textMuted} />
+              </Pressable>
+            </View>
 
             {/* Type Toggle */}
             <View style={[styles.typeToggle, { backgroundColor: theme.surface }]}>
@@ -328,8 +342,8 @@ export default function AddTransactionSheet({
               />
             </View>
           </ScrollView>
+        </Animated.View>
         </KeyboardAvoidingView>
-      </Animated.View>
       </GestureHandlerRootView>
     </Modal>
   );
@@ -342,11 +356,12 @@ const styles = StyleSheet.create({
   overlayPress: {
     flex: 1,
   },
+  keyboardAvoidingView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   sheet: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    width: '100%',
     maxHeight: '92%',
     borderTopLeftRadius: Radius.xxl,
     borderTopRightRadius: Radius.xxl,
@@ -364,6 +379,15 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: Spacing.lg,
     paddingBottom: Spacing.huge,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: Spacing.sm,
+  },
+  closeButton: {
+    padding: Spacing.xs,
   },
   typeToggle: {
     flexDirection: 'row',
