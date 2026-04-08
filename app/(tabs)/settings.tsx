@@ -14,6 +14,7 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
+import { router } from 'expo-router';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -291,8 +292,33 @@ export default function SettingsScreen() {
 
         {/* Data */}
         <Text style={[Typography.label, { color: theme.textMuted, paddingHorizontal: Spacing.lg, marginTop: Spacing.xl, marginBottom: Spacing.sm }]}>
-          DATA
+          DATA & SECURITY
         </Text>
+
+        <SettingsRow
+          icon="logout"
+          title="Logout"
+          subtitle="Sign out securely"
+          onPress={() => {
+            Alert.alert(
+              'Logout',
+              'Are you sure you want to sign out? Your biometric lock will be required to re-enter.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Logout',
+                  style: 'destructive',
+                  onPress: () => {
+                    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+                    settings.setAuthenticated(false);
+                    router.replace('/login');
+                  },
+                },
+              ]
+            );
+          }}
+          delay={380}
+        />
 
         <SettingsRow
           icon="delete-outline"

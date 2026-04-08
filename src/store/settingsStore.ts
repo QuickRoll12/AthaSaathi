@@ -15,6 +15,7 @@ interface SettingsState extends AppSettings {
   setTheme: (theme: ThemeMode) => void;
   toggleTheme: () => void;
   setCurrency: (currency: CurrencyCode) => void;
+  setAuthenticated: (status: boolean) => void;
   setOnboardingComplete: () => void;
   updateProfile: (profile: Partial<UserProfile>) => void;
   setMonthlyBudget: (budget: number) => void;
@@ -24,6 +25,7 @@ interface SettingsState extends AppSettings {
 const DEFAULT_SETTINGS: AppSettings = {
   theme: 'dark',
   currency: 'INR',
+  isAuthenticated: false,
   hasCompletedOnboarding: false,
   monthlyBudget: 0,
   profile: {
@@ -77,6 +79,11 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setOnboardingComplete: () => {
     set({ hasCompletedOnboarding: true });
     persistSettings({ ...get(), hasCompletedOnboarding: true });
+  },
+
+  setAuthenticated: (status: boolean) => {
+    set({ isAuthenticated: status });
+    persistSettings({ ...get(), isAuthenticated: status });
   },
 
   updateProfile: (profileUpdate) => {

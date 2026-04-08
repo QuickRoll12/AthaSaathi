@@ -79,6 +79,7 @@ export interface AppSettings {
   theme: ThemeMode;
   currency: CurrencyCode;
   hasCompletedOnboarding: boolean;
+  isAuthenticated: boolean;
   monthlyBudget: number;
   profile: UserProfile;
 }

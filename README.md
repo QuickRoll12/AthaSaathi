@@ -26,6 +26,17 @@
 
 ---
 
+## 🔒 Demo Authentication
+
+To review and test the application, use the following credentials at the initial login screen:
+
+- **Username**: `admin`
+- **Password**: `password`
+
+*(These are mock credentials used strictly for local evaluation purposes.)*
+
+---
+
 ## 🎯 Features
 
 ### Core Features
