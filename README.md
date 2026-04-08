@@ -20,7 +20,7 @@
 
 ## ✨ Overview
 
-**ArthaSaathi** (अर्थसाथी — *"Your Wealth Companion"*) is a beautifully crafted, production-quality expense tracking app that demonstrates senior-level mobile development skills. Built with a clean, scalable architecture, it features rich animations, dark/light theme support, and a premium fintech-style UI.
+**ArthaSaathi** (अर्थसाथी — *"Your Wealth Companion"*) is a beautifully crafted, production-quality expense tracking app that demonstrates mobile app development skills. Built with a clean, scalable architecture, it features rich animations, dark/light theme support, and a premium fintech-style UI.
 
 > **Artha** (Sanskrit: wealth/purpose/meaning) + **Saathi** (Hindi: companion/partner)
 
@@ -291,4 +291,4 @@ Made with ❤️ in India
 
 ## 📄 License
 
-This project is created as part of an internship assignment evaluation.
+This repository is an assigned task by TUF abbreviated as TakeUForward.
